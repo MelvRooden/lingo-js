@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial Black;
+}
+
+body {
+    background-image: url("grfx/background.jpg");
+    background-size: cover;
+}
+
+main {
+    width: 501px;
+    height: 714px;
+    padding: 2px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+input {
+    width:  92px;
+    height: 92px;
+    font-size: 70px;
+    border: solid white;
+    box-sizing: content-box;
+    text-align: center;
+    background-color: dodgerblue;
+}
+
+button {
+    width: 495px;
+    height: 100px;
+    font-size: 70px;
+    border: solid white;
+    box-sizing: content-box;
+    background-color: dodgerblue;
+}
+
+h1 {
+    width: 495px;
+    height: 100px;
+    text-align: center;
+    font-size: 70px;
+    border: solid white;
+    box-sizing: content-box;
+    background-color: dodgerblue;
+}
