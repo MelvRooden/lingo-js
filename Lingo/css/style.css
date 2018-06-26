@@ -45,3 +45,8 @@ h1 {
     box-sizing: content-box;
     background-color: dodgerblue;
 }
+
+.yellow {
+    border-radius: 90%;
+    background-color: yellow;
+}

@@ -1,9 +1,16 @@
+//the full word that has been chosen from one of the word lists
+var fullWord = 0;
+
+//length of the word
+var wordSize = 4;
+var wordSize1 = 5;
+
 //creating all inputs
 var table = document.getElementsByTagName("table")[0];
 for (var LO1 = 0; LO1 <= 4; LO1++) {
     var tr = document.createElement("TR");
     tr.setAttribute("id", "R" + LO1);
-    for (var LO2 = 0; LO2 <= 4; LO2++) {
+    for (var LO2 = 0; LO2 <= wordSize; LO2++) {
         var td = document.createElement("TD");
         var input = document.createElement("INPUT");
         input.setAttribute("id", 'R' + LO1 + 'L' + LO2);
@@ -20,8 +27,12 @@ for (var LO1 = 0; LO1 <= 4; LO1++) {
     table.appendChild(tr);
 }
 
+for (var disabled = 0; disabled <= wordSize; disabled++) {
+    document.getElementById('R' + disabled + 'L0').setAttribute("disabled", "true");
+}
+
 //all words
-var words = [
+var wordLength5 = [
     "appel",
     "aldus",
     "afwas",
@@ -501,13 +512,13 @@ var words = [
     "zeker",
     "zever",
     "zeeen"];
-var fullWord = words[Math.floor(Math.random()*words.length)];
+fullWord = wordLength5[Math.floor(Math.random() * wordLength5.length)];
 console.log('fullWord = ' + fullWord);
 
-var word1 = fullWord.split('');
-console.log('word1 = ' + word1);
+var word = fullWord.split('');
+console.log('word1 = ' + word);
 for (var LO3 = 0; LO3 <= 4; LO3++) {
-    document.getElementById('R' + LO3 + 'L0').setAttribute("value", word1[0]);
+    document.getElementById('R' + LO3 + 'L0').setAttribute("value", word[0]);
 }
 
 //the variable row keeps count of which row the check function has to check
@@ -518,6 +529,7 @@ function reload() {
     location.reload();
 }
 
+//checks the word that has been guessed
 function check() {
     var word = fullWord.split('');
     console.log('word = ' + word);
@@ -529,24 +541,18 @@ function check() {
     console.log('tempWord = ' + tempWord);
 
     //appoints all input values to a variable
-    var l0 = document.getElementById('R' + row + 'L0').value;
-    var l1 = document.getElementById('R' + row + 'L1').value;
-    var l2 = document.getElementById('R' + row + 'L2').value;
-    var l3 = document.getElementById('R' + row + 'L3').value;
-    var l4 = document.getElementById('R' + row + 'L4').value;
+    var guess = [];
+    for (var guessMaker = 0; guessMaker <= wordSize; guessMaker++) {
+        guess.push(document.getElementById('R' + row + 'L' + guessMaker).value);
+    }
+    var fullGuess = (guess[0] + guess[1] + guess[2] + guess[3] + guess[4]);
 
-    //makes a guess out of the inputs
-    var fullGuess = (l0 + l1 + l2 + l3 + l4);
-    console.log('fullGuess = ' + fullGuess);
-    var guess = fullGuess.split('');
-    console.log('guess = ' + guess);
-
-    if (fullGuess.length < 5) {
+    if (fullGuess.length < wordSize1) {
         alert('vul uw gok helemaal in!');
 
         //checks if the whole word is the as the whole guess
     } else if (fullGuess === fullWord) {
-        for (var painter = 0; painter <= 4; painter++) {
+        for (var painter = 0; painter <= wordSize; painter++) {
             document.getElementById('R' + row + 'L' + painter).style.background = "orange";
             document.getElementById('R' + row + 'L' + painter).setAttribute("disabled", "true");
         }
@@ -559,7 +565,7 @@ function check() {
     } else {
 
         //checks if 1 letter of the word is the same as 1 letter of the guess
-        for (var loop = 0; loop <= 4; loop++) {
+        for (var loop = 0; loop <= wordSize; loop++) {
             if (guess[loop] === tempWord[loop]) {
                 document.getElementById('R' + row + 'L' + loop).style.background = "orange";
                 tempWord[loop] = 'correct';
@@ -573,15 +579,15 @@ function check() {
         console.log('tempWord = ' + tempWord);
 
         //checks if 1 letter of the word is the same as a letter of the guess
-        for (var loop1 = 0; loop1 <= 4; loop1++) {
+        for (var loop1 = 0; loop1 <= wordSize; loop1++) {
             document.getElementById('R' + row + 'L' + loop1).setAttribute("disabled", "true");
-            if (nextRow <= 4) {
+            if (nextRow <= wordSize) {
                 document.getElementById('R' + nextRow + 'L' + loop1).removeAttribute("disabled");
             }
-            for (var loop2 = 0; loop2 <= 4; loop2++) {
+            for (var loop2 = 0; loop2 <= wordSize; loop2++) {
                 if (guess[loop1] === tempWord[loop2]) {
                     console.log('guess = ' + guess);
-                    document.getElementById('R' + row + 'L' + loop1).style.background = "yellow";
+                    document.getElementById('R' + row + 'L' + loop1).setAttribute("class", "yellow");
                     console.log('tempWord = ' + tempWord);
                     tempWord[loop2] = 'incorrect';
                     break;
@@ -593,11 +599,14 @@ function check() {
         nextRow++;
 
         //changes the button to restart the page
-        if (row === 5) {
+        if (row === wordSize1) {
             document.getElementById("result").innerHTML = fullWord;
             document.getElementById("result").style.background = "red";
             document.getElementById("answer").innerHTML = "Herstart";
             document.getElementById("answer").onclick = reload;
+        }
+        for (var disabled = 0; disabled <= wordSize; disabled++) {
+            document.getElementById('R' + disabled + 'L0').setAttribute("disabled", "true");
         }
     }
 }
